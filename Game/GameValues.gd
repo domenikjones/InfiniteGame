@@ -1,0 +1,14 @@
+extends Node
+
+enum GAME_STATES {
+	GAME_MENU,
+	GAME_OPTIONS,
+	WORLD,
+	CREDITS,
+}
+
+enum GAME_MODES {
+	EASY,
+	MEDIUM,
+	HARD,
+}

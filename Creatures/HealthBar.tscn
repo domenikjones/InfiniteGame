@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Assets/custom/progress_red.png" type="Texture" id=1]
+[ext_resource path="res://Assets/custom/progress_green.png" type="Texture" id=2]
+[ext_resource path="res://Creatures/HealthBar.gd" type="Script" id=3]
+
+[node name="HealthBar" type="TextureProgress"]
+margin_left = -8.0
+margin_top = -20.6518
+margin_right = 24.0
+margin_bottom = -16.6518
+rect_scale = Vector2( 0.5, 0.5 )
+value = 100.0
+texture_under = ExtResource( 1 )
+texture_progress = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
