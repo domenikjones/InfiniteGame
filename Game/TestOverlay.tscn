@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Game/TestOverlay.gd" type="Script" id=1]
+[ext_resource path="res://Game/Fonts/monogram_small.tres" type="DynamicFont" id=2]
 
 [node name="TestOverlay" type="Node"]
 script = ExtResource( 1 )
@@ -12,6 +13,7 @@ margin_left = 10.0
 margin_top = 10.0
 margin_right = 155.449
 margin_bottom = 43.7462
+custom_fonts/font = ExtResource( 2 )
 text = "Current State: "
 __meta__ = {
 "_edit_use_anchors_": false

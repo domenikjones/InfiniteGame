@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var MAX_HEALTH = 25
-export var HEALTH = 20
+export var HEALTH = 1
 
 export var GRAVITY = 600
 export var WALK_SPEED = 200
@@ -15,6 +15,7 @@ export var WIDTH = 720
 
 var motion = Vector2()
 var is_jumping = true
+var is_dead = false
 var just_jumped = true
 var just_attacked = false
 
@@ -22,6 +23,7 @@ onready var sprite: AnimatedSprite = $Sprite
 onready var attack_animator: AnimationPlayer = $Attack/AttackAnimator
 onready var jump_timer: Timer = $JumpTimer
 onready var attack_timer: Timer = $AttackTimer
+onready var death_timer: Timer = $DeathTimer
 onready var health_bar: TextureProgress = $HealthBar
 
 func _process(delta):
@@ -29,6 +31,10 @@ func _process(delta):
 		Character.new_score_width(position.x)
 
 func _physics_process(delta):
+	# dead
+	if HEALTH <= 0:
+		die()
+		return
 	
 	apply_gravity(delta)
 	handle_input()
@@ -47,6 +53,25 @@ func _physics_process(delta):
 	# update character position
 	Character.character_position = position
 
+func die():
+	if not is_dead:
+		print("set animation")
+		Character.is_dead = true
+		is_dead = true
+		sprite.play("Die")
+		return
+	
+	print(" ")
+	print("sprite.animation", sprite.animation)
+	print("sprite.frame", sprite.frame)
+	print("sprite.playing", sprite.playing)
+	print("sprite.frame_count", sprite.frames.get_frame_count("Die"))
+	
+	if sprite.frame == sprite.frames.get_frame_count("Die") - 1 and sprite.playing:
+		print("Death, frame count", sprite.frames.get_frame_count("Die"))
+		sprite.stop()
+		death_timer.start(3)
+
 func update_health_bar():
 	health_bar.max_value = MAX_HEALTH
 	health_bar.value = HEALTH
@@ -62,6 +87,10 @@ func apply_gravity(delta):
 			is_jumping = false
 
 func handle_input():
+	# character is dead
+	if Character.is_dead:
+		return
+		
 	# handle attack
 	if Input.is_action_just_pressed("attack") and not just_attacked:
 		just_attacked = true
@@ -123,3 +152,16 @@ func _on_JumpTimer_timeout():
 
 func _on_AttackTimer_timeout():
 	just_attacked = false
+
+func _on_DeathTimer_timeout():
+	GameState.set_game_state(GameValues.GAME_STATES.CREDITS)
+
+func _on_HeadHurtBox_area_entered(area):
+	print("got hurt in the head")
+	HEALTH -= 2
+	health_bar.value = HEALTH
+
+func _on_BodyHurtBox_area_entered(area):
+	print("got hurt in the body")
+	HEALTH -= 1
+	health_bar.value = HEALTH
