@@ -24,7 +24,7 @@ config/icon="res://icon.png"
 GameState="*res://Autoload/GameState.tscn"
 GameValues="*res://Game/GameValues.gd"
 GameScenes="*res://Game/GameScenes.gd"
-Utils="*res://Utils.gd"
+Utils="*res://Autoload/Utils.gd"
 Character="*res://Game/Character/Character.gd"
 Rng="*res://Autoload/Rng.gd"
 

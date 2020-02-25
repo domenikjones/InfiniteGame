@@ -238,7 +238,7 @@ one_shot = true
 [node name="Attack" type="Area2D" parent="."]
 
 [node name="CollisionShape" type="CollisionShape2D" parent="Attack"]
-position = Vector2( -13.3253, -2.20688 )
+position = Vector2( 30.9269, -28.7506 )
 shape = SubResource( 26 )
 disabled = true
 
