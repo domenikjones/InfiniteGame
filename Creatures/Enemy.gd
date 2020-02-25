@@ -30,9 +30,7 @@ onready var walkable_fall_right: RayCast2D = $Walkable/FallRight
 func _physics_process(delta):
 	
 	apply_gravity(delta)
-	
 	apply_ai()
-	
 	apply_sprite_horizontal()
 	apply_sprite_animation()
 	
@@ -52,13 +50,13 @@ func apply_ai():
 	# block ai further on until timer timeout
 	is_ai = false
 	
-	# set raycast positions
+	# update raycast positions
 	var raycast_position = Vector2(position.x, position.y - 10)
 	walkable_left.position = raycast_position
 	walkable_right.position = raycast_position
 	walkable_fall_left.position = raycast_position
 	walkable_fall_right.position = raycast_position
-		
+	
 	# is player in range
 	var distance = position.distance_to(Character.character_position)
 	if distance > VIEW_DISTANCE:
@@ -70,75 +68,65 @@ func apply_ai():
 	var result = space_state.intersect_ray(position, Character.character_position)
 	if result and position.distance_to(result.position) > MELEE_DISTANCE:
 		print("Melee Attack")
-		
+		# ToDo
+
 func ai_idle():
 	var rand_i = Rng.randi() % 10 + 1
 	var rand_j = Rng.randi() % 10 + 1
-	print("ai_idle ", rand_i, " ", rand_j)
-	print("walkable.left ", walkable_left.is_colliding(), " ", walkable_left.collide_with_areas, " ", walkable_left.enabled)
-	print("walkable.right ", walkable_right.is_colliding(), " ", walkable_right.collide_with_areas, " ", walkable_right.enabled)
-	#print("walkable.fall.left ", walkable_fall_left.is_colliding())
-	#print("walkable.fall.right ", walkable_fall_right.is_colliding())
 	
 	# not moving yet
 	if motion.x == 0:
 		# idle at position
 		if rand_i > 4:
-			print("stay and continue to stay")
 			return
 		
 		# can only walk left
 		if not can_walk_right() and can_walk_left():
-			print("can only walk left")
 			walk_left()
 			return
 		
 		# can only walk right
 		if not can_walk_left() and can_walk_right():
-			print("con only walk right")
 			walk_right()
 			return
 		
 		# walk to either side
-		print("start to walk to a side")
 		if rand_j > 5 and can_walk_right():
 			walk_right()
 		else:
 			if can_walk_left():
 				walk_left()
-				
-		print("could not start walk to a side")
-		
+			else:
+				# can not walk, possible loop hole
+				pass
+	
 	elif motion.x < 0:
 		# is moving in left direction
-		print("motion.x ", motion.x)
-		# continue movement
 		if rand_i > 3 and can_walk_left():
+			# continue movement
 			walk_left()
-			print("continue to walk in direction left")
 		else:
+			# stop movement
 			motion.x = 0
-			print("do not walk more left")
-
+	
 	# is moving in a direction
 	elif motion.x > 0:
 		# is moving in right direction
-		print("motion.x ", motion.x)
-		# continue movement
 		if rand_i > 3 and can_walk_right():
+			# continue movement
 			walk_right()
-			print("continue to walk in direction right")
 		else:
+			# stop movement
 			motion.x = 0
-			print("do not walk more right")
+	else:
+		# uncaptured, stop movement
+		motion.x = 0
 
 func walk_left():
 	motion.x = -WALK_SPEED * 0.25
-	print("walk left")
-	
+
 func walk_right():
 	motion.x = WALK_SPEED * 0.25
-	print("walk right")
 
 func can_walk_left() -> bool:
 	if not walkable_fall_left.is_colliding():
@@ -146,7 +134,7 @@ func can_walk_left() -> bool:
 	if walkable_left.is_colliding():
 		return false
 	return true
-			
+
 func can_walk_right() -> bool:
 	if not walkable_fall_right.is_colliding():
 		return false

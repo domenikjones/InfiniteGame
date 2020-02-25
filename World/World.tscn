@@ -21,3 +21,4 @@ current = true
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( -0.481552, 273.256 )
+z_index = 10
