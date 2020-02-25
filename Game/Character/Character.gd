@@ -4,6 +4,8 @@ var hearts = 0 setget set_hearts, get_hearts
 var diamonds = 0 setget set_diamonds, get_diamonds
 var score_width = 0 setget set_score_width, get_score_width
 
+var character_position: Vector2 = Vector2()
+
 export var BASE_DAMAGE = 1
 export var STRENGTH = 23
 export var DEXTERITY = 5

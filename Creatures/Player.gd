@@ -43,6 +43,9 @@ func _physics_process(delta):
 	# In the case of a 2D platformer, in Godot, upward is negative y, which translates to -1 as a normal.
 	move_and_slide(motion, Vector2(0, -1))
 	update_health_bar()
+	
+	# update character position
+	Character.character_position = position
 
 func update_health_bar():
 	health_bar.max_value = MAX_HEALTH

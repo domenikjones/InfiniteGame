@@ -90,6 +90,7 @@ attack={
 2d_physics/layer_3="enviromental"
 2d_physics/layer_4="diamons"
 2d_physics/layer_5="hearts"
+2d_physics/layer_6="tilemap"
 
 [rendering]
 

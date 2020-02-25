@@ -9,33 +9,33 @@
 
 [sub_resource type="AtlasTexture" id=1]
 flags = 4
-atlas = ExtResource( 4 )
+atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=2]
 flags = 4
 atlas = ExtResource( 3 )
-region = Rect2( 0, 0, 34, 28 )
+region = Rect2( 34, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=3]
 flags = 4
 atlas = ExtResource( 3 )
-region = Rect2( 34, 0, 34, 28 )
+region = Rect2( 68, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=4]
 flags = 4
 atlas = ExtResource( 3 )
-region = Rect2( 68, 0, 34, 28 )
+region = Rect2( 102, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=5]
 flags = 4
 atlas = ExtResource( 3 )
-region = Rect2( 102, 0, 34, 28 )
+region = Rect2( 136, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=6]
 flags = 4
-atlas = ExtResource( 3 )
-region = Rect2( 136, 0, 34, 28 )
+atlas = ExtResource( 4 )
+region = Rect2( 0, 0, 34, 28 )
 
 [sub_resource type="AtlasTexture" id=7]
 flags = 4
@@ -144,15 +144,15 @@ region = Rect2( 102, 0, 34, 28 )
 
 [sub_resource type="SpriteFrames" id=28]
 animations = [ {
-"frames": [ SubResource( 1 ) ],
-"loop": true,
-"name": "Jump",
-"speed": 5.0
-}, {
-"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ) ],
 "loop": true,
 "name": "Attack",
 "speed": 4.0
+}, {
+"frames": [ SubResource( 6 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
@@ -172,9 +172,11 @@ animations = [ {
 
 [sub_resource type="CapsuleShape2D" id=29]
 radius = 5.11565
-height = 1.90353
+height = 4.59638
 
 [node name="Enemy" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 0
 script = ExtResource( 6 )
 WALK_SPEED = 150
 
@@ -185,9 +187,48 @@ animation = "Idle"
 speed_scale = 2.0
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2( 3.01348, -8.68594 )
+position = Vector2( 2.71886, -8.0967 )
 shape = SubResource( 29 )
 
 [node name="JumpTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="SomeTimer" type="Timer" parent="."]
+wait_time = 0.25
+autostart = true
+
+[node name="Walkable" type="Node" parent="."]
+
+[node name="Left" type="RayCast2D" parent="Walkable"]
+position = Vector2( -2.5, -6 )
+rotation = 1.5708
+enabled = true
+cast_to = Vector2( 0, 35 )
+collision_mask = 97
+collide_with_areas = true
+
+[node name="FallLeft" type="RayCast2D" parent="Walkable"]
+position = Vector2( -2.5, -6 )
+rotation = 1.22173
+enabled = true
+cast_to = Vector2( 0, 35 )
+collision_mask = 96
+collide_with_areas = true
+
+[node name="FallRight" type="RayCast2D" parent="Walkable"]
+position = Vector2( 8, -6 )
+rotation = 5.06145
+enabled = true
+cast_to = Vector2( 0, 35 )
+collision_mask = 96
+collide_with_areas = true
+
+[node name="Right" type="RayCast2D" parent="Walkable"]
+position = Vector2( 8, -6 )
+rotation = 4.71239
+enabled = true
+cast_to = Vector2( 0, 35 )
+collision_mask = 96
+collide_with_areas = true
 [connection signal="timeout" from="JumpTimer" to="." method="_on_JumpTimer_timeout"]
+[connection signal="timeout" from="SomeTimer" to="." method="_on_SomeTimer_timeout"]
