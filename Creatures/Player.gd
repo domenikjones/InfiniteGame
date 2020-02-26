@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var MAX_HEALTH = 25
-export var HEALTH = 1
+export var HEALTH = 10
 
 export var GRAVITY = 600
 export var WALK_SPEED = 200
@@ -31,15 +31,15 @@ func _process(delta):
 		Character.new_score_width(position.x)
 
 func _physics_process(delta):
-	# dead
-	if HEALTH <= 0:
-		die()
-		return
 	
 	apply_gravity(delta)
-	handle_input()
-	apply_sprite_horizontal()
-	apply_sprite_animation()
+	
+	if HEALTH > 0:
+		handle_input()
+		apply_sprite_horizontal()
+		apply_sprite_animation()
+	else:
+		die()
 	
 	if motion.y < MAX_JUMP_FORCE:
 		motion.y = MAX_JUMP_FORCE
@@ -55,20 +55,12 @@ func _physics_process(delta):
 
 func die():
 	if not is_dead:
-		print("set animation")
 		Character.is_dead = true
 		is_dead = true
 		sprite.play("Die")
 		return
 	
-	print(" ")
-	print("sprite.animation", sprite.animation)
-	print("sprite.frame", sprite.frame)
-	print("sprite.playing", sprite.playing)
-	print("sprite.frame_count", sprite.frames.get_frame_count("Die"))
-	
 	if sprite.frame == sprite.frames.get_frame_count("Die") - 1 and sprite.playing:
-		print("Death, frame count", sprite.frames.get_frame_count("Die"))
 		sprite.stop()
 		death_timer.start(3)
 
@@ -156,12 +148,14 @@ func _on_AttackTimer_timeout():
 func _on_DeathTimer_timeout():
 	GameState.set_game_state(GameValues.GAME_STATES.CREDITS)
 
-func _on_HeadHurtBox_area_entered(area):
-	print("got hurt in the head")
-	HEALTH -= 2
-	health_bar.value = HEALTH
+func _on_HeadHurtBox_area_entered(area):	
+	if area.collision_layer == 2:
+		print("got hurt in the head", area)
+		HEALTH -= 2
+		health_bar.value = HEALTH
 
-func _on_BodyHurtBox_area_entered(area):
-	print("got hurt in the body")
-	HEALTH -= 1
-	health_bar.value = HEALTH
+func _on_BodyHurtBox_area_entered(area):	
+	if area.collision_layer == 2:
+		print("got hurt in the body", area)
+		HEALTH -= 1
+		health_bar.value = HEALTH

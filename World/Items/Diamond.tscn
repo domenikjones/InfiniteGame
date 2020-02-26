@@ -115,7 +115,7 @@ tracks/1/keys = {
 radius = 6.72285
 
 [node name="Diamond" type="KinematicBody2D"]
-collision_layer = 0
+collision_layer = 4
 collision_mask = 0
 script = ExtResource( 3 )
 DISAPPEAR_TIMER = 2
@@ -124,7 +124,7 @@ DISAPPEAR_TIMER = 2
 position = Vector2( -2.15974, -8.15903 )
 frames = SubResource( 13 )
 animation = "Idle"
-frame = 5
+frame = 3
 playing = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]
@@ -139,6 +139,7 @@ wait_time = 10.0
 one_shot = true
 
 [node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
 position = Vector2( 0.123791, -8.66531 )

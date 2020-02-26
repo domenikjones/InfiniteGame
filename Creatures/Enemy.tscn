@@ -245,7 +245,7 @@ WALK_SPEED = 150
 position = Vector2( 0, -14 )
 frames = SubResource( 28 )
 animation = "Idle"
-frame = 7
+frame = 4
 playing = true
 
 [node name="CollisionShape" type="CollisionShape2D" parent="."]

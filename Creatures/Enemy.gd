@@ -94,7 +94,6 @@ func apply_ai():
 	#var result = space_state.intersect_ray(position, Character.character_position)
 	var is_in_distance = position.distance_to(Character.character_position) <= MELEE_DISTANCE and position.distance_to(Character.character_position) >= MIN_MELEE_DISTANCE
 	if is_in_distance and not is_ai_attacking_cooldown:
-		print("Melee Attack Distance ", position.distance_to(Character.character_position))
 		
 		# prepare attack
 		is_ai_attacking = true
@@ -255,12 +254,10 @@ func _on_SomeTimer_timeout():
 
 func _on_AttackTimer_timeout():
 	if is_ai_attacking:
-		print("is not attacking anymore")
 		is_ai_attacking = false
 		attack_timer.start(ATTACK_COOLDOWN)
 		return
 	
 	if is_ai_attacking_cooldown:
-		print("is not attacking cooldown anymore")
 		is_ai_attacking_cooldown = false
 		return
