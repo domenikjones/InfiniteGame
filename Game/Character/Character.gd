@@ -1,5 +1,6 @@
 extends Node
 
+var is_dead = true
 var hearts = 0 setget set_hearts, get_hearts
 var diamonds = 0 setget set_diamonds, get_diamonds
 var score_width = 0 setget set_score_width, get_score_width
@@ -9,6 +10,13 @@ var character_position: Vector2 = Vector2()
 export var BASE_DAMAGE = 1
 export var STRENGTH = 23
 export var DEXTERITY = 5
+
+func reset():
+	character_position = Vector2(-1000, -1000)
+	hearts = 0
+	diamonds = 0
+	score_width = 0
+	is_dead = true
 
 func set_score_width(value: int):
 	print("CAN NOT SET SCORE VALUE")

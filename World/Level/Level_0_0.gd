@@ -16,6 +16,7 @@ var current_height = 5
 var current_y = 6
 
 onready var Chest = preload("res://World/Items/Chest.tscn")
+onready var Enemy = preload("res://Creatures/Enemy.tscn")
 onready var tile_map: TileMap = $TileMap
 onready var tile_size = tile_map.cell_size
 
@@ -78,13 +79,28 @@ func _load_column():
 			tile_map.update_bitmask_area(Vector2(current_index, i))
 	
 	# spawn chest
-	_spawn_chest()
+	var _chest = _spawn_chest()
+	
+	# spawn enemy 
+	if not _chest:
+		var _enemy = _spawn_enemy()
 	
 	current_index +=1
 
-func _spawn_chest():
+func _spawn_chest() -> bool:
 	if Rng.randi() % 10 + 1 > 9:
-		print("[{}] spawn chest".format(current_index))
+		print("[" + str(current_index) + "] spawn chest")
 		var x = (current_index * tile_size.x) + (tile_size.x / 2)
 		var y = (current_y * tile_size.x) + (current_height * tile_size.x)
 		Utils.instance_scene_on_main(Chest, Vector2(x, y))
+		return true
+	return false
+
+func _spawn_enemy() -> bool:
+	if Rng.randi() % 100 + 1 > 95:
+		print("[" + str(current_index) + "] spawn enemy")
+		var x = (current_index * tile_size.x) + (tile_size.x / 2)
+		var y = (current_y * tile_size.x) + (current_height * tile_size.x) - 20
+		Utils.instance_scene_on_main(Enemy, Vector2(x, y))
+		return true
+	return false

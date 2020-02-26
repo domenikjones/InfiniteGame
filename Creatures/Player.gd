@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var MAX_HEALTH = 25
-export var HEALTH = 20
+export var HEALTH = 10
 
 export var GRAVITY = 600
 export var WALK_SPEED = 200
@@ -15,6 +15,7 @@ export var WIDTH = 720
 
 var motion = Vector2()
 var is_jumping = true
+var is_dead = false
 var just_jumped = true
 var just_attacked = false
 
@@ -22,6 +23,7 @@ onready var sprite: AnimatedSprite = $Sprite
 onready var attack_animator: AnimationPlayer = $Attack/AttackAnimator
 onready var jump_timer: Timer = $JumpTimer
 onready var attack_timer: Timer = $AttackTimer
+onready var death_timer: Timer = $DeathTimer
 onready var health_bar: TextureProgress = $HealthBar
 
 func _process(delta):
@@ -31,9 +33,13 @@ func _process(delta):
 func _physics_process(delta):
 	
 	apply_gravity(delta)
-	handle_input()
-	apply_sprite_horizontal()
-	apply_sprite_animation()
+	
+	if HEALTH > 0:
+		handle_input()
+		apply_sprite_horizontal()
+		apply_sprite_animation()
+	else:
+		die()
 	
 	if motion.y < MAX_JUMP_FORCE:
 		motion.y = MAX_JUMP_FORCE
@@ -46,6 +52,17 @@ func _physics_process(delta):
 	
 	# update character position
 	Character.character_position = position
+
+func die():
+	if not is_dead:
+		Character.is_dead = true
+		is_dead = true
+		sprite.play("Die")
+		return
+	
+	if sprite.frame == sprite.frames.get_frame_count("Die") - 1 and sprite.playing:
+		sprite.stop()
+		death_timer.start(3)
 
 func update_health_bar():
 	health_bar.max_value = MAX_HEALTH
@@ -62,6 +79,10 @@ func apply_gravity(delta):
 			is_jumping = false
 
 func handle_input():
+	# character is dead
+	if Character.is_dead:
+		return
+		
 	# handle attack
 	if Input.is_action_just_pressed("attack") and not just_attacked:
 		just_attacked = true
@@ -123,3 +144,18 @@ func _on_JumpTimer_timeout():
 
 func _on_AttackTimer_timeout():
 	just_attacked = false
+
+func _on_DeathTimer_timeout():
+	GameState.set_game_state(GameValues.GAME_STATES.CREDITS)
+
+func _on_HeadHurtBox_area_entered(area):	
+	if area.collision_layer == 2:
+		print("got hurt in the head", area)
+		HEALTH -= 2
+		health_bar.value = HEALTH
+
+func _on_BodyHurtBox_area_entered(area):	
+	if area.collision_layer == 2:
+		print("got hurt in the body", area)
+		HEALTH -= 1
+		health_bar.value = HEALTH

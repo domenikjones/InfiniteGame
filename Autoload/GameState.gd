@@ -32,6 +32,7 @@ func set_game_state(new_state):
 	
 	# change to game menu
 	if new_state == GameValues.GAME_STATES.GAME_MENU:
+		Character.reset()
 		GameScenes._change_scene("res://Game/GameMenu.tscn")
 	
 	# change to game options
@@ -40,7 +41,13 @@ func set_game_state(new_state):
 	
 	# change to ingame
 	elif new_state == GameValues.GAME_STATES.WORLD:
+		Character.reset()
+		Character.is_dead = false
 		GameScenes._change_scene("res://World/World.tscn")
+	
+	# change to credits
+	elif new_state == GameValues.GAME_STATES.CREDITS:
+		GameScenes._change_scene("res://Game/Credits.tscn")
 
 func get_game_state():
 	return game_state
