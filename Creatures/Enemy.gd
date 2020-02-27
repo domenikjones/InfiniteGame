@@ -9,6 +9,7 @@ var just_jumped = false
 var health = 10
 var has_bomb = false
 var is_dead = false
+export var ATTACKS_AI = false
 
 var is_ai = true
 var is_ai_alerted = false
@@ -95,6 +96,9 @@ func _physics_process(delta):
 	# In the case of a 2D platformer, in Godot, upward is negative y, which translates to -1 as a normal.
 	move_and_slide(motion, Vector2(0, -1))
 
+func get_best_target():
+	Utils.get_nodes_from_world("Enemy")
+
 func die():
 	if not is_dead:
 		is_dead = true
@@ -136,6 +140,8 @@ func apply_ai(delta):
 	if collect_items():
 		# break the ai loop
 		return
+	
+	var target = get_best_target()
 	
 	# player not in range
 	var distance = position.distance_to(Character.character_position)

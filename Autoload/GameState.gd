@@ -11,10 +11,6 @@ func _ready():
 	print("GameState._ready")
 	game_state = GameValues.GAME_STATES.GAME_MENU
 	game_mode = GameValues.GAME_MODES.EASY
-	
-func _process(delta):
-	#print(get_state_label(), get_mode_label())
-	pass
 
 func set_game_state(new_state):
 	print("set_game_state() ", new_state)

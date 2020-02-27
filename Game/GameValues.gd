@@ -12,3 +12,5 @@ enum GAME_MODES {
 	MEDIUM,
 	HARD,
 }
+
+var TILE_SIZE: int = 32

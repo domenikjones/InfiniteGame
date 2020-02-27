@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends "res://World/KinematicBody2DGravity.gd"
 
 export var DISAPPEAR_TIMER = 5
 export var REWARD_MIN = 3
@@ -9,6 +9,13 @@ onready var timer: Timer = $Timer
 
 func _ready():
 	timer.start(DISAPPEAR_TIMER)
+	motion = Vector2(rand_range(-1,1), -.5)
+	_move_and_collide = true
+	gravity = 5
+	
+func _physics_process(delta):
+	_apply_gravity(delta)
+	_move()
 
 func _on_Hurtbox_body_entered(body):
 	rand_reward()
