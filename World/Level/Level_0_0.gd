@@ -25,7 +25,7 @@ func _ready():
 	
 func _physics_process(delta):
 	if Character.score_width > (current_block * BLOCK_SIZE * tile_size.x) - (2 * BLOCK_SIZE * tile_size.x):
-		print("reload block")
+		#print("reload block")
 		_load_block()
 	
 	# foo bar 
@@ -89,7 +89,7 @@ func _load_column():
 
 func _spawn_chest() -> bool:
 	if Rng.randi() % 10 + 1 > 9:
-		print("[" + str(current_index) + "] spawn chest")
+		#print("[" + str(current_index) + "] spawn chest")
 		var x = (current_index * tile_size.x) + (tile_size.x / 2)
 		var y = (current_y * tile_size.x) + (current_height * tile_size.x)
 		Utils.instance_scene_on_main(Chest, Vector2(x, y))
@@ -98,7 +98,7 @@ func _spawn_chest() -> bool:
 
 func _spawn_enemy() -> bool:
 	if Rng.randi() % 100 + 1 > 95:
-		print("[" + str(current_index) + "] spawn enemy")
+		#print("[" + str(current_index) + "] spawn enemy")
 		var x = (current_index * tile_size.x) + (tile_size.x / 2)
 		var y = (current_y * tile_size.x) + (current_height * tile_size.x) - 20
 		Utils.instance_scene_on_main(Enemy, Vector2(x, y))

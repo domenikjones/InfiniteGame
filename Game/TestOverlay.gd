@@ -9,6 +9,6 @@ func _process(delta):
 func set_label():
 	label.text = "State: " + GameState.get_state_label() + \
 		"\nMode: " + GameState.get_mode_label() + \
-		"\nHearts: " + str(Character.hearts) + \
+		"\nLife: " + str(Character.health) + \
 		"\nDiamonds: " + str(Character.diamonds) + \
 		"\nHealth bars: " + str(GameState.show_health_bars)

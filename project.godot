@@ -91,6 +91,7 @@ attack={
 2d_physics/layer_4="diamons"
 2d_physics/layer_5="hearts"
 2d_physics/layer_6="tilemap"
+2d_physics/layer_7="collectable"
 
 [rendering]
 

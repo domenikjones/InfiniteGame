@@ -1,8 +1,9 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://Assets/platformer/14-TileSets/Terrain (32x32).png" type="Texture" id=1]
 [ext_resource path="res://Creatures/Enemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/TileMap.tscn" type="PackedScene" id=3]
+[ext_resource path="res://World/Items/Bomb.tscn" type="PackedScene" id=4]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 8, 0, 8, 32, 0, 32, 0, 0 )
@@ -846,7 +847,7 @@ position = Vector2( 123.955, 345.14 )
 position = Vector2( 72.1116, 84.3752 )
 
 [node name="Enemy4" parent="Enemies" instance=ExtResource( 2 )]
-position = Vector2( 292.639, 120.743 )
+position = Vector2( 286.652, 119.546 )
 
 [node name="Enemy5" parent="Enemies" instance=ExtResource( 2 )]
 position = Vector2( 423.409, 123.838 )
@@ -862,3 +863,17 @@ position = Vector2( 339.067, 379.186 )
 
 [node name="Enemy9" parent="Enemies" instance=ExtResource( 2 )]
 position = Vector2( 384.72, 376.865 )
+
+[node name="Bombs" type="Node" parent="."]
+
+[node name="Bomb" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 450.971, 99.7234 )
+
+[node name="Bomb2" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 330.026, 97.3285 )
+
+[node name="Bomb3" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 259.974, 372.15 )
+
+[node name="Bomb4" parent="Bombs" instance=ExtResource( 4 )]
+position = Vector2( 635.383, 310.48 )

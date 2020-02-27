@@ -29,9 +29,8 @@ __meta__ = {
 }
 
 [node name="Infinite Side-Scroller" type="Label" parent="CenterContainer/VBoxContainer"]
-margin_top = -10.0
 margin_right = 132.0
-margin_bottom = 15.0
+margin_bottom = 13.0
 custom_fonts/font = ExtResource( 3 )
 text = "Infinite Side-Scroller"
 

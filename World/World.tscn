@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://World/World.gd" type="Script" id=1]
 [ext_resource path="res://Game/TestOverlay.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/PauseMenu.tscn" type="PackedScene" id=3]
 [ext_resource path="res://World/Level/Level_0_0.tscn" type="PackedScene" id=4]
-[ext_resource path="res://World/Items/Chest.tscn" type="PackedScene" id=5]
-[ext_resource path="res://World/Items/Diamond.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Creatures/Enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Creatures/Player.tscn" type="PackedScene" id=8]
 
 [node name="World" type="Node"]
@@ -22,11 +21,8 @@ current = true
 [node name="Level" parent="." instance=ExtResource( 4 )]
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
-position = Vector2( -126.306, 248.549 )
+position = Vector2( -143.666, 283.512 )
 z_index = 10
 
-[node name="Chest" parent="." instance=ExtResource( 5 )]
-position = Vector2( -190.746, 287.4 )
-
-[node name="Diamond" parent="." instance=ExtResource( 6 )]
-position = Vector2( -182.51, 191.773 )
+[node name="Enemy" parent="." instance=ExtResource( 5 )]
+position = Vector2( -346.939, 283.512 )

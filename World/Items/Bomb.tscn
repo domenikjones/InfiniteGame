@@ -1,0 +1,124 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Assets/platformer/09-Bomb/Bomb Off.png" type="Texture" id=1]
+[ext_resource path="res://Assets/platformer/09-Bomb/Boooooom (52x56).png" type="Texture" id=2]
+[ext_resource path="res://Assets/platformer/09-Bomb/Bomb On (52x56).png" type="Texture" id=3]
+[ext_resource path="res://World/Items/Bomb.gd" type="Script" id=4]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 52, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 104, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 3 )
+region = Rect2( 156, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 52, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 104, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 156, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 208, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 260, 0, 52, 56 )
+
+[sub_resource type="AtlasTexture" id=11]
+flags = 4
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 52, 56 )
+
+[sub_resource type="SpriteFrames" id=12]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "On",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "Boom",
+"speed": 10.0
+}, {
+"frames": [ SubResource( 11 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 10.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=15]
+extents = Vector2( 6.04843, 5.84454 )
+
+[sub_resource type="CircleShape2D" id=14]
+radius = 6.03559
+
+[sub_resource type="CircleShape2D" id=16]
+radius = 48.4398
+
+[node name="Bomb" type="KinematicBody2D"]
+collision_layer = 64
+collision_mask = 32
+script = ExtResource( 4 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+position = Vector2( -0.310127, -11.0612 )
+frames = SubResource( 12 )
+animation = "Idle"
+
+[node name="CollisionShape" type="CollisionShape2D" parent="."]
+position = Vector2( 0.141602, -5.94626 )
+shape = SubResource( 15 )
+
+[node name="Pickup" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 2
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Pickup"]
+visible = false
+position = Vector2( 0.310127, -5.99578 )
+shape = SubResource( 14 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Explosion" type="Area2D" parent="."]
+collision_layer = 4
+
+[node name="CollisionShape" type="CollisionShape2D" parent="Explosion"]
+position = Vector2( 0, -6.2427 )
+shape = SubResource( 16 )
+disabled = true
+[connection signal="area_entered" from="Pickup" to="." method="_on_Pickup_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
